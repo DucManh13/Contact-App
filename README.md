@@ -15,11 +15,11 @@ tree T;
 
 FILE *f;
 
-void create(tree &T){	//khoi tao cay
+void create(tree &T){
 	T=NULL;
 }
 
-void display(tree T){ //duyet theo thu tu giua
+void display(tree T){ //display theo thu tu giua
 	if(T!=NULL){
 		display((*T).left);
 		printf("\t\t\t%d\r\t%s\n",(*T).repeat,(*T).content);
@@ -33,7 +33,7 @@ int insertnode(tree &T,char x[],int stt){  //them node vao cay
 			(*T).repeat++;
 			return 0;
 		}
-		if(strcmp(x,(*T).content)>0){	// lon hon thi insert cay con phai
+		if(strcmp(x,(*T).content)>0){		// lon hon thi insert cay con phai
 			return insertnode((*T).right,x,2*stt+2);
 		}
 		else{	// nho hon thi insert cay con trai
@@ -50,7 +50,7 @@ int insertnode(tree &T,char x[],int stt){  //them node vao cay
 	return 1;
 }
 
-tree search(tree T,char x[]){	//tim node theo tu
+tree search(tree T,char x[]){
 	tree p=T;
 	while(p!=NULL){
 		if(strcmp(x,(*p).content)==0){
@@ -79,7 +79,7 @@ void replace(tree &p,tree &q){	// tim q chet thay cho p
 	}	
 }
 
-void deletenode(tree &T,char x[]){	//xoa 1 node khoi cay
+void deletenode(tree &T,char x[]){
 	if(T==NULL) return ;
 	if(strcmp((*T).content,x)>0) return deletenode((*T).left,x);
 	if(strcmp((*T).content,x)<0) return deletenode((*T).right,x);
@@ -113,7 +113,8 @@ tree skipnode(tree T,int i){ //tra ve nut co so thu tu la i,neu khong tra ve nul
 	while(i>pow(2,m)-2) m++;	//m la muc cua nut can tim 
 	while(true){
 		b=((*T).stt)*2+1;	//thu tu cua nut con trai cua T
-		for(int j=1;j<=m-n;j++) b=b*2+2;	//tinh thu tu lon nhat co the cua nut thuoc cay con trai
+		for(int j=1;j<=m-n;j++) 
+b=b*2+2;	//tinh thu tu lon nhat co the cua nut thuoc cay con trai
 		if(i<=b){	//nut thu tu i nam tren cay con trai
 			if((*T).left==NULL) return NULL;
 			else T=(*T).left;
@@ -132,7 +133,7 @@ int countlevel(tree T){	// tinh chieu cao cua cay
 	if(T){
 		if((*T).left==NULL&&(*T).right==NULL) return 1;
 		else return (1+countlevel((*T).left)>=1+countlevel((*T).right)?
-					 1+countlevel((*T).left):1+countlevel((*T).right));
+				1+countlevel((*T).left):1+countlevel((*T).right));
 	}
 	else return 0;
 }
@@ -140,22 +141,24 @@ int countlevel(tree T){	// tinh chieu cao cua cay
 void readfile(FILE *f){	// doc tep dua tu vao cay
 	create(T);
 	char des[max],c;
-	f=fopen("textfile.txt","r");	// mo file can doc
+	f=fopen("test.txt","r");	// mo file can doc
 	int i=0;
 	while(feof(f)==0){	// doc cho den cuoi file
 		c=fgetc(f);		// doc 1 ky tu tu file
 		if(feof(f)!=0){	// neu da den cuoi file 
-			if(des[0]!=NULL) insertnode(T,des,0);	// doc tu vua tim duoc vao cay neu co
+			if(des[0]!=NULL) insertnode(T,des,0);	// doc tu tim duoc vao cay
 		}
 		else{
-			if(('A'<=c&&c<='Z')||('a'<=c&&c<='z')||('0'<=c&&c<='9')){	// neu ki tu la chu hoac so thi ghep vao tu 
+			if(('A'<=c&&c<='Z')||('a'<=c&&c<='z')||('0'<=c&&c<='9')){
+ // neu ki tu la chu hoac so thi ghep vao tu 
 				des[i]=c;
 				i++;
 			}
 			else{
 				if(des[0]!=NULL){	// them tu vua tim duoc vao cay 
 					insertnode(T,des,0);
-					for(int u=0;u<max;u++) des[u]=NULL;	// reset chuoi des de tim tu tiep theo
+					for(int u=0;u<max;u++) des[u]=NULL;	
+// reset chuoi des de tim tu tiep theo
 					i=0;
 				}
 			}
@@ -170,11 +173,11 @@ void graphics(tree T){	// ve cay
 	initwindow(1400,600);
 	setbkcolor(GREEN);
 	cleardevice();  
-	setlinestyle(0,0,2);
 	settextstyle(3,0,1);
+	setlinestyle(0, 0, 2);
 	int x=0,y=50,a=0,b=0,t=100,step=1200;
 	outtextxy(680,20,(*T).content);	//in goc cua cay
-	for(i=1;i<=level-1;i++){
+	for(i=1;i<=level;i++){
 		x=100+step/2;
 		a=x-step/4;
 		b=x+step/4;
